@@ -2,6 +2,7 @@ package com.spring.api.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,10 +51,14 @@ public class TutorialController {
 		
 		return new ResponseEntity<>(tutorialService.save(newTurorial), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") long id){
-		tutorialService.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		if(!tutorialService.isEmptyById(id)){
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}else{
+			tutorialService.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 	}
 }

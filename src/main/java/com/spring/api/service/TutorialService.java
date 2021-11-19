@@ -22,6 +22,10 @@ public class TutorialService {
 	public Tutorial findById(Long id){
 		return tutorialRepository.findById(id).get();
 	}
+
+	public boolean isEmptyById(Long id){
+		return tutorialRepository.findById(id).isEmpty();
+	}
 	
 	public Tutorial save(Tutorial tutorial) {
 		return tutorialRepository.save(tutorial);
